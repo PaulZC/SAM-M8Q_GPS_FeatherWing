@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.6.0">
+<eagle version="8.2.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="yes"/>
@@ -8760,7 +8760,6 @@ if you will not be using the CR1220 battery.</text>
 <pinref part="MS1" gate="G$1" pin="GND"/>
 <pinref part="U$8" gate="G$1" pin="GND"/>
 <pinref part="JP4" gate="A" pin="7"/>
-<pinref part="JP4" gate="A" pin="7"/>
 <wire x1="66.04" y1="38.1" x2="66.04" y2="43.18" width="0.1524" layer="91"/>
 <junction x="66.04" y="43.18"/>
 </segment>
@@ -8891,7 +8890,6 @@ if you will not be using the CR1220 battery.</text>
 <pinref part="MS1" gate="G$1" pin="GPIO13"/>
 <pinref part="JP2" gate="A" pin="3"/>
 <junction x="76.2" y="86.36"/>
-<pinref part="JP2" gate="A" pin="3"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -8899,7 +8897,6 @@ if you will not be using the CR1220 battery.</text>
 <pinref part="MS1" gate="G$1" pin="GPIO12"/>
 <pinref part="JP2" gate="A" pin="4"/>
 <junction x="78.74" y="86.36"/>
-<pinref part="JP2" gate="A" pin="4"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -8907,7 +8904,6 @@ if you will not be using the CR1220 battery.</text>
 <pinref part="MS1" gate="G$1" pin="GPIO11"/>
 <pinref part="JP2" gate="A" pin="5"/>
 <junction x="81.28" y="86.36"/>
-<pinref part="JP2" gate="A" pin="5"/>
 </segment>
 </net>
 <net name="N$6" class="0">
@@ -9074,15 +9070,16 @@ if you will not be using the CR1220 battery.</text>
 </sheet>
 </sheets>
 <errors>
-<approved hash="117,1,91.44,83.82,VBAT,,,,,"/>
-<approved hash="113,1,64.5245,43.18,SJ1,,,,,"/>
-<approved hash="113,1,94.1112,40.4029,JP4,,,,,"/>
-<approved hash="113,1,97.6588,84.0571,JP2,,,,,"/>
-<approved hash="113,1,65.8029,116.709,JP1,,,,,"/>
-<approved hash="113,1,129.303,96.3888,JP3,,,,,"/>
-<approved hash="113,1,112.784,35.56,SJ2,,,,,"/>
-<approved hash="113,1,118.356,35.56,SJ3,,,,,"/>
-<approved hash="113,1,38.1,142.301,TP1,,,,,"/>
+<approved hash="117,1,68.58,86.36,VBAT,,,,,"/>
+<approved hash="113,1,41.6645,45.72,SJ1,,,,,"/>
+<approved hash="113,1,71.2512,42.9429,JP4,,,,,"/>
+<approved hash="113,1,74.7988,86.5971,JP2,,,,,"/>
+<approved hash="113,1,22.6229,109.089,JP1,,,,,"/>
+<approved hash="113,1,55.6429,109.089,JP3,,,,,"/>
+<approved hash="113,1,89.9245,38.1,SJ2,,,,,"/>
+<approved hash="113,1,95.4955,38.1,SJ3,,,,,"/>
+<approved hash="113,1,33.02,160.081,TP1,,,,,"/>
+<approved hash="113,1,46.7445,147.32,SJ4,,,,,"/>
 </errors>
 </schematic>
 </drawing>

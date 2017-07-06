@@ -4,10 +4,15 @@
 
 A clone of the Adafruit Ultimate GPS FeatherWing but with the
 u-blox SAM-M8Q replacing the GlobalTop FGPMMOPA6H
-(Currently untested)
+
+(PCBs are currently out for manufacture - should be assembled and tested before the end July 2017)
 
 See SAM-M8Q_GPS_FeatherWing.pdf for the BOM etc.:
 https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/SAM-M8Q_GPS_FeatherWing.pdf
+
+The Arduino sub-directory contains code for the Adafruit M0 Feather Adalogger
+https://www.adafruit.com/products/2796
+which will log your route to SD card in GPX and CSV format
 
 Based on an original design by Adafruit Industries:
 https://www.adafruit.com/product/3133
