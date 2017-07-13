@@ -3,7 +3,7 @@
 A clone of the Adafruit Ultimate GPS FeatherWing but with the
 u-blox SAM-M8Q replacing the GlobalTop FGPMMOPA6H
 
-[[https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_FeatherWing.jpg]]
+![SAM-M8Q_FeatherWing](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_FeatherWing.jpg)
 
 **Tested and working!**
 
@@ -13,9 +13,9 @@ The Arduino sub-directory contains code for the [Adafruit Feather M0 Adalogger](
 - https://www.adafruit.com/products/2796
 - https://learn.adafruit.com/adafruit-feather-m0-adalogger
 
-[[https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_and_Adalogger_1.jpg]]
+![SAM-M8Q_and_Adalogger_1](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_and_Adalogger_1.jpg)
 
-[[https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_and_Adalogger_2.jpg]]
+![SAM-M8Q_and_Adalogger_2](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_and_Adalogger_2.jpg)
 
 Based on an original design by Adafruit Industries:
 - https://www.adafruit.com/product/3133
