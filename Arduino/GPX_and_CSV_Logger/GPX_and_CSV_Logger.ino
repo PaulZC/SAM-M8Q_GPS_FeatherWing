@@ -141,7 +141,11 @@ void setup()
   delay(100);
   GPS.sendCommand("$PUBX,40,RMC,0,5,0,0*42");  // Set GPRMC message rate to 5 (secs) - comment out for 1 sec logging
   delay(100);
-  Serial1.write(setNavPortable, len_setNav); // Set Navigation Mode
+  Serial1.write(setNavPortable, len_setNav); // Set Portable Navigation Mode
+  //Serial1.write(setNavPedestrian, len_setNav); // Set Pedestrian Navigation Mode
+  //Serial1.write(setNavAutomotive, len_setNav); // Set Automotive Navigation Mode
+  //Serial1.write(setNavSea, len_setNav); // Set Sea Navigation Mode
+  //Serial1.write(setNavAir, len_setNav); // Set Airborne <1G Navigation Mode
   delay(100);
   Serial1.write(setNMEA, len_setNMEA); // Set NMEA configuration (use GP prefix instead of GN otherwise parsing will fail)
   delay(1100);
@@ -225,6 +229,7 @@ void loop() // run over and over again
         Serial.print("Angle: "); Serial.println(GPS.angle);
         Serial.print("Altitude: "); Serial.println(GPS.altitude);
         Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
+        Serial.print("HDOP: "); Serial.println(GPS.HDOP);
       }
 #endif
 
@@ -303,6 +308,9 @@ void loop() // run over and over again
         gpx_dataString += "<sat>";
         gpx_dataString += String((int)GPS.satellites);
         gpx_dataString += "</sat>\n";
+        gpx_dataString += "<hdop>";
+        gpx_dataString += String(GPS.HDOP, 2);
+        gpx_dataString += "</hdop>\n";
         gpx_dataString += "<desc>Battery voltage ";
         gpx_dataString += String(vbat, 2);
         gpx_dataString += "V</desc>\n";
@@ -328,6 +336,7 @@ void loop() // run over and over again
         csv_dataString += String((int)GPS.fix); csv_dataString += ',';
         csv_dataString += String((int)GPS.fixquality); csv_dataString += ',';
         csv_dataString += String((int)GPS.satellites); csv_dataString += ',';
+        csv_dataString += String(GPS.HDOP); csv_dataString += ',';
         csv_dataString += String(trkpt); csv_dataString += ',';
         csv_dataString += String(vbat, 2); csv_dataString += '\n';
 
@@ -408,7 +417,7 @@ void loop() // run over and over again
           
           // if the file is available, write to it:
           if (csv_dataFile) {
-            csv_dataFile.print("HH:MM:SS DD/MM/YYYY,LAT,LON,SPEED,ANGLE,ALT,FIX,FIXQUAL,SAT,TRKPT,BATV\n"); // write header
+            csv_dataFile.print("HH:MM:SS DD/MM/YYYY,LAT,LON,SPEED,ANGLE,ALT,FIX,FIXQUAL,SAT,HDOP,TRKPT,BATV\n"); // write header
             csv_dataFile.close();
             Serial.print("Logging to ");
             Serial.println(csv_filename);
