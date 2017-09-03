@@ -77,7 +77,7 @@ TP is also connected to an LED via a buffer transistor. By default it will flash
 
 ![SAM-M8Q_FeatherWing_TPLED](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_FeatherWing_TPLED.jpg)
 
-**En** is a true 'power disable' control line you can use to completely cut power to the SAM-M8Q. This is good if you need to run at ultra-low-power modes. By default this is pulled low (enabled). So pull high to disable the SAM-M8Q.
+**En** is a true 'power disable' control line you can use to completely cut power to the SAM-M8Q. This is good if you need to run at ultra-low-power modes. By default this is pulled low (enabled). So pull high (to 3V) to disable the SAM-M8Q.
 
 ## Battery Backup
 
@@ -123,6 +123,15 @@ Useful documentation about the SAM-M8Q and its protocol specification can be fou
 ## Mikal Hart's TinyGPS
 
 - https://github.com/mikalhart/TinyGPS
+
+## GPX_and_CSV_Logger
+
+The [Arduino](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/tree/master/Arduino) directory contains code for the [Adafruit Feather M0 Adalogger](https://www.adafruit.com/products/2796) which will log your route to SD card in GPX and CSV format.
+
+By default, the code updates the GPX and CSV files once every five seconds. You can alter the code to log (e.g.) every second should you want to. If you do this, be careful when you disconnect the power as you may end up with a corrupt file if you remove the power while the SD card is being updated.
+Either wait for the Adalogger red LED to flash (indicating an SD write) then quickly disconnect the power, or alter the code to include a 'stop button' feature which stops the logger writing to SD card and gets it ready for power down.
+
+GPX_and_CSV_Logger can also be used with the Adafruit Ultimate GPS FeatherWing. Comment out the line which says _#define UBLOX_ to use the Ultimate GPS.
 
 ## Acknowledgements
 
