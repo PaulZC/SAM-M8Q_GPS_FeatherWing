@@ -88,7 +88,7 @@ If you install the battery _and_ have the split pad shorted **BAD THINGS WILL HA
 
 ![SAM-M8Q_FeatherWing_Backup](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_FeatherWing_Backup.jpg)
 
-## Antenna Options
+## Antenna
 
 The SAM-M8Q comes with a built-in patch antenna and, unlike the Ultimate GPS, it isn't possible to connect an external antenna. If you do want to use an enternal antenna, check out the MAX-M8Q FeatherWing:
 - https://github.com/PaulZC/MAX-M8Q_GPS_FeatherWing
@@ -109,6 +109,15 @@ In normal power mode, the SAM-M8Q draws approx. 45mA. You can reduce this to app
 
 You can find the messages to change the navigation and power modes in the [GPX_and_CSV_Logger](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/tree/master/Arduino) Arduino code.
 
+## GPX_and_CSV_Logger
+
+The [Arduino](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/tree/master/Arduino) directory contains code for the [Adafruit Feather M0 Adalogger](https://www.adafruit.com/products/2796) which will log your route to SD card in GPX and CSV format.
+
+By default, the code updates the GPX and CSV files once every five seconds. You can alter the code to log (e.g.) every second should you want to. If you do this, be careful when you disconnect the power as you may end up with a corrupt file if you remove the power while the SD card is being updated.
+Either wait for the Adalogger red LED to flash (indicating an SD write) then quickly disconnect the power, or alter the code to include a 'stop button' feature which stops the logger writing to SD card and gets it ready for power down.
+
+GPX_and_CSV_Logger can also be used with the Adafruit Ultimate GPS FeatherWing. Comment out the line which says _#define UBLOX_ to use the Ultimate GPS.
+
 ## Datasheets
 
 Useful documentation about the SAM-M8Q and its protocol specification can be found at:
@@ -123,15 +132,6 @@ Useful documentation about the SAM-M8Q and its protocol specification can be fou
 ## Mikal Hart's TinyGPS
 
 - https://github.com/mikalhart/TinyGPS
-
-## GPX_and_CSV_Logger
-
-The [Arduino](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/tree/master/Arduino) directory contains code for the [Adafruit Feather M0 Adalogger](https://www.adafruit.com/products/2796) which will log your route to SD card in GPX and CSV format.
-
-By default, the code updates the GPX and CSV files once every five seconds. You can alter the code to log (e.g.) every second should you want to. If you do this, be careful when you disconnect the power as you may end up with a corrupt file if you remove the power while the SD card is being updated.
-Either wait for the Adalogger red LED to flash (indicating an SD write) then quickly disconnect the power, or alter the code to include a 'stop button' feature which stops the logger writing to SD card and gets it ready for power down.
-
-GPX_and_CSV_Logger can also be used with the Adafruit Ultimate GPS FeatherWing. Comment out the line which says _#define UBLOX_ to use the Ultimate GPS.
 
 ## Acknowledgements
 
