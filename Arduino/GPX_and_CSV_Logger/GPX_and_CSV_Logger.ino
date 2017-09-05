@@ -14,6 +14,11 @@
 #define UBLOX // Comment this line out to select the Adafruit Ultimate GPS
 //#define LOWPOWER // Comment this line out to disable u-blox M8 low power mode
 //#define DEBUG // Comment this line out to disable extra serial debug messages
+//#define GALILEO // Comment this line out to use the default GNSS: GPS + SBAS + QZSS + GLONASS
+
+// Connect a normally-open push-to-close switch between swPin and GND.
+// Press it to stop logging.
+#define swPin 15 // Digital Pin 15 (0.2" away from the GND pin on the Adalogger)
 
 // Include the Adafruit GPS Library
 // https://github.com/adafruit/Adafruit_GPS
@@ -38,6 +43,10 @@ char gpx_filename[] = "20000000/000000.gpx";
 char csv_filename[] = "20000000/000000.csv";
 char dirname[] = "20000000";
 boolean fileReady = false;
+
+// LEDs
+#define RedLED 13
+#define GreenLED 8
 
 // Count number of valid fixes before starting to log (to avoid possible corrupt file names)
 int valfix = 0;
@@ -93,24 +102,40 @@ static const int len_setNMEA = 28;
 static const uint8_t setLP[] = { 0xb5, 0x62, 0x06, 0x11, 0x02, 0x00, 0x48, 0x01, 0x62, 0x12 };
 static const int len_setLP = 10;
 
+// Set GNSS Config to GPS + Galileo + GLONASS (no SBAS or QZSS) (Causes a reset of the M8!)
+static const uint8_t setGNSS[] = {
+  0xb5, 0x62, 0x06, 0x3e, 0x3c, 0x00, 0x00, 0x20, 0x20, 0x07,
+  0x00, 0x08, 0x10, 0x00, 0x01, 0x00, 0x01, 0x01,
+  0x01, 0x01, 0x03, 0x00, 0x00, 0x00, 0x01, 0x01,
+  0x02, 0x04, 0x08, 0x00, 0x01, 0x00, 0x01, 0x01,
+  0x03, 0x08, 0x10, 0x00, 0x00, 0x00, 0x01, 0x01,
+  0x04, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01, 0x03,
+  0x05, 0x00, 0x03, 0x00, 0x00, 0x00, 0x01, 0x05,
+  0x06, 0x08, 0x0e, 0x00, 0x01, 0x00, 0x01, 0x01,
+  0x54, 0x1b };
+static const int len_setGNSS = 68;
+
 #endif
 
 void setup()
 {
-  // initialize digital pins 13 and 8 as outputs.
-  pinMode(13, OUTPUT); // Red LED
-  pinMode(8, OUTPUT); // Green LED
+  // initialize digital pins RedLED and GreenLED as outputs.
+  pinMode(RedLED, OUTPUT); // Red LED
+  pinMode(GreenLED, OUTPUT); // Green LED
   // flash red and green LEDs on reset
   for (int i=0; i <= 4; i++) {
-    digitalWrite(13, HIGH);
+    digitalWrite(RedLED, HIGH);
     delay(200);
-    digitalWrite(13, LOW);
-    digitalWrite(8, HIGH);
+    digitalWrite(RedLED, LOW);
+    digitalWrite(GreenLED, HIGH);
     delay(200);
-    digitalWrite(8, LOW);
+    digitalWrite(GreenLED, LOW);
   }
 
-  delay(10000); // Allow 10 sec for user to open serial monitor
+  // initialize swPin as an input for the stop switch
+  pinMode(swPin, INPUT_PULLUP);
+
+  //delay(10000); // Allow 10 sec for user to open serial monitor
   
   // connect at 115200 so we can read the GPS fast enough and echo without dropping chars
   Serial.begin(115200);
@@ -148,6 +173,10 @@ void setup()
   //Serial1.write(setNavAir, len_setNav); // Set Airborne <1G Navigation Mode
   delay(100);
   Serial1.write(setNMEA, len_setNMEA); // Set NMEA configuration (use GP prefix instead of GN otherwise parsing will fail)
+#ifdef GALILEO
+  delay(100);
+  Serial1.write(setGNSS, len_setGNSS); // Set GNSS - causes a reset of the M8!
+#endif
   delay(1100);
 
 #else
@@ -168,7 +197,7 @@ void setup()
   Serial.println("GPS initialized!");
 
   // flash the red LED during SD initialisation
-  digitalWrite(13, HIGH);
+  digitalWrite(RedLED, HIGH);
 
   // Initialise SD card
   Serial.println("Initializing SD card...");
@@ -181,13 +210,20 @@ void setup()
   Serial.println("SD Card initialized!");
 
   // turn red LED off
-  digitalWrite(13, LOW);
+  digitalWrite(RedLED, LOW);
 
   Serial.println("Waiting for GPS fix...");
 }
      
 void loop() // run over and over again
 {
+  // Check if stop switch has been pressed
+  if (digitalRead(swPin) == LOW) {
+    Serial.println("Stop Switch Pressed! Waiting for reset...");
+    digitalWrite(RedLED, HIGH); // turn the red led on
+    while(1); // wait for reset
+  }
+  
   // read data from the GPS in the 'main loop'
   char c = GPS.read();
   // if you want to debug, this is a good time to do it!
@@ -242,14 +278,14 @@ void loop() // run over and over again
     
       // turn green LED on to indicate GPS fix
       if (GPS.fix) {
-        digitalWrite(8, HIGH);
+        digitalWrite(GreenLED, HIGH);
         // increment valfix and cap at maxvalfix
         // don't do anything fancy in terms of decrementing valfix as we want to keep logging even if the fix is lost
         valfix += 1;
         if (valfix > maxvalfix) valfix = maxvalfix;
       }
       else {
-        digitalWrite(8, LOW);
+        digitalWrite(GreenLED, LOW);
       }
 
 #ifdef UBLOX
@@ -341,7 +377,7 @@ void loop() // run over and over again
         csv_dataString += String(vbat, 2); csv_dataString += '\n';
 
         // flash red LED to indicate SD write (leave on if an error occurs)
-        digitalWrite(13, HIGH);
+        digitalWrite(RedLED, HIGH);
 
         // syntax checking:
         // check if voltage is > 3.55V, if not then don't try to write!
@@ -464,7 +500,7 @@ void loop() // run over and over again
             Serial.print(csv_dataString);
 #endif
             trkpt += 1; // increment track point
-            digitalWrite(13, LOW); // write was successful so turn LED off
+            digitalWrite(RedLED, LOW); // write was successful so turn LED off
           }
           // if the file isn't open, pop up an error:
           else {
