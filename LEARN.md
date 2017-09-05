@@ -1,6 +1,6 @@
 # SAM-M8Q GNSS FeatherWing
 
-A clone of the [Adafruit Ultimate GPS FeatherWing](https://www.adafruit.com/product/3133) but with the u-blox SAM-M8Q replacing the GlobalTop FGPMMOPA6H.
+A clone of the [Adafruit Ultimate GPS FeatherWing](https://www.adafruit.com/product/3133) but with the u-blox SAM-M8Q replacing the GlobalTop FGPMMOPA6H. The SAM-M8Q can receive signals from GPS, GLONASS and Galileo concurrently and supports both SBAS and QZSS.
 
 ![SAM-M8Q_FeatherWing](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_FeatherWing.jpg)
 
@@ -36,7 +36,7 @@ If you want to completely power down the Adalogger _and_ the SAM-M8Q, you can do
 
 ![SAM-M8Q_FeatherWing_TxRxTop](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_FeatherWing_TxRxTop.jpg)
 
-The SAM-M8Q FeatherWing, like the Ultimate GPS FeatherWing, communicates over UART serial. It sends ASCII NMEA sentences from the TX pin to the microcontroller RX pin and can be controlled to change its data output from the microcontroller TX pin. Logic level is 3.3V for both.
+The SAM-M8Q FeatherWing, like the Ultimate GPS FeatherWing, communicates over UART serial. It sends ASCII NMEA sentences from the TX pin to the microcontroller RX pin and can be controlled to change its data output from the microcontroller TX pin. Logic level is 3V for both.
 
 The u-box M8 chipset also supports much more comprehensive UBX binary format messages (see below).
 
@@ -71,7 +71,7 @@ Note that pulling GPS Reset low does not put the SAM-M8Q into a low power state,
 **INT** is connected to the SAM-M8Q EXTINT external interrupt pin. It can be used for control of the receiver or for aiding. See the u-blox documentation links below for further details.
 
 **TP** is connected to the SAM-M8Q TP time pulse pin. It can be used to output pulse trains synchronized with GPS or UTC time grid with intervals configurable over a wide frequency range.
-Thus it may be used as a low frequency time synchronization pulse or as a high frequency reference signal. By default, the time pulse signal is configured to 1 pulse per second.
+Thus it may be used as a low frequency time synchronization pulse or as a high frequency reference signal (up to 10 MHz). By default, the time pulse signal is configured to 1 pulse per second.
 
 TP is also connected to an LED via a buffer transistor. By default it will flash once per second once the receiver is synchronised to GNSS time.
 
@@ -98,14 +98,14 @@ The SAM-M8Q comes with a built-in patch antenna and, unlike the Ultimate GPS, it
 ## Serial Protocol
 
 The SAM-M8Q is based on u-blox's sophisticated M8 chipset. By default it will output standard NMEA format navigation messages, but also supports much more comprehensive UBX binary format messages.
-As the SAM-M8Q is able to provide location information from GPS, GLONASS, BeiDou and Galileo, you will find that the prefix of the NMEA messages changes to: $GP for GPS, SBAS and QZSS; $GL for GLONASS; $GA for Galileo; $GB for BeiDou; or $GN if it is using a mix of satellites (which is usually the case).
-Having the messages prefixed with $GN will confuse the Adafruit GPS Library and Mikal Hart's TinyGPS. To get round this, you can force the M8 chip "Talker ID" to GP by sending the following UBX binary format message:
+As the SAM-M8Q is able to provide location information from GPS, GLONASS and Galileo, you will find that the prefix of the NMEA messages changes to: $GP for GPS, SBAS and QZSS; $GL for GLONASS; $GA for Galileo; or $GN if it is using a mix of satellites (which is usually the case).
+Having the messages prefixed with $GN will confuse the Adafruit GPS Library and Mikal Hart's TinyGPS. To get round this, you can force the "Talker ID" to GP by sending the following UBX binary format message:
 
 - 0xb5, 0x62, 0x06, 0x17, 0x14, 0x00, 0x20, 0x40, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x96, 0xd9
 
 The M8 chipset supports several different navigation modes including: portable, pedestrian, automotive, sea and "Airborne <1G" (which is really useful for high altitude ballooning!).
 
-In normal power mode, the SAM-M8Q draws approx. 45mA. You can reduce this to approx. 28mA by putting the M8 into power save mode. But be careful. If you put the M8 into power save mode too early, before the chip has established a fix, the chip can perform a full reset.
+In normal power mode, the SAM-M8Q draws approx. 29mA. You can reduce this to approx. 9.5mA by putting the M8 into power save mode. But be careful. If you put the M8 into power save mode too early, before the chip has established a fix, the chip can perform a full reset.
 
 You can find the messages to change the navigation and power modes in the [GPX_and_CSV_Logger](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/tree/master/Arduino) Arduino code.
 
