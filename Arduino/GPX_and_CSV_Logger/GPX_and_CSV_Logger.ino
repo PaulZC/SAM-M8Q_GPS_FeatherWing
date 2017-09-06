@@ -13,8 +13,9 @@
 
 #define UBLOX // Comment this line out to select the Adafruit Ultimate GPS
 //#define LOWPOWER // Comment this line out to disable u-blox M8 low power mode
+//#define GALILEO // Comment this line out to use the default u-blox M8 GNSS: GPS + SBAS + QZSS + GLONASS
+
 //#define DEBUG // Comment this line out to disable extra serial debug messages
-//#define GALILEO // Comment this line out to use the default GNSS: GPS + SBAS + QZSS + GLONASS
 
 // Connect a normally-open push-to-close switch between swPin and GND.
 // Press it to stop logging.
@@ -45,8 +46,8 @@ char dirname[] = "20000000";
 boolean fileReady = false;
 
 // LEDs
-#define RedLED 13
-#define GreenLED 8
+#define RedLED 13 // The red LED on the Adalogger is connected to Digital Pin 13
+#define GreenLED 8 // The green LED on the Adalogger is connected to Digital Pin 8
 
 // Count number of valid fixes before starting to log (to avoid possible corrupt file names)
 int valfix = 0;
@@ -98,13 +99,14 @@ static const int len_setNMEA = 28;
 
 // Set Low Power Mode
 // Use this with caution
-// Putting the MAX-M8Q into low power mode before a fix has been established can cause it to reset after 10secs (searchPeriod)
+// Putting the M8 into low power mode before a fix has been established can cause it to reset after 10secs (searchPeriod)
 static const uint8_t setLP[] = { 0xb5, 0x62, 0x06, 0x11, 0x02, 0x00, 0x48, 0x01, 0x62, 0x12 };
 static const int len_setLP = 10;
 
 // Set GNSS Config to GPS + Galileo + GLONASS (no SBAS or QZSS) (Causes a reset of the M8!)
 static const uint8_t setGNSS[] = {
-  0xb5, 0x62, 0x06, 0x3e, 0x3c, 0x00, 0x00, 0x20, 0x20, 0x07,
+  0xb5, 0x62, 0x06, 0x3e, 0x3c, 0x00,
+  0x00, 0x20, 0x20, 0x07,
   0x00, 0x08, 0x10, 0x00, 0x01, 0x00, 0x01, 0x01,
   0x01, 0x01, 0x03, 0x00, 0x00, 0x00, 0x01, 0x01,
   0x02, 0x04, 0x08, 0x00, 0x01, 0x00, 0x01, 0x01,
@@ -135,14 +137,14 @@ void setup()
   // initialize swPin as an input for the stop switch
   pinMode(swPin, INPUT_PULLUP);
 
-  //delay(10000); // Allow 10 sec for user to open serial monitor
+  delay(10000); // Allow 10 sec for user to open serial monitor
   
   // connect at 115200 so we can read the GPS fast enough and echo without dropping chars
   Serial.begin(115200);
   Serial.println("Log GPS Position to SD card in GPX and CSV format");
   Serial.println("Green LED = GPS Fix");
   Serial.println("Red LED Flash = SD Write");
-  Serial.println("Continuous Red indicates a problem!");
+  Serial.println("Continuous Red indicates a problem or that the stop button has been pressed.");
 
   Serial.println("Initializing GPS...");
 
@@ -219,7 +221,7 @@ void loop() // run over and over again
 {
   // Check if stop switch has been pressed
   if (digitalRead(swPin) == LOW) {
-    Serial.println("Stop Switch Pressed! Waiting for reset...");
+    Serial.println("Stop switch pressed! Waiting for reset...");
     digitalWrite(RedLED, HIGH); // turn the red led on
     while(1); // wait for reset
   }
