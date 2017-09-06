@@ -107,7 +107,9 @@ The M8 chipset supports several different navigation modes including: portable, 
 
 In normal power mode, the SAM-M8Q draws approx. 29mA. You can reduce this to approx. 9.5mA by putting the M8 into power save mode. But be careful. If you put the M8 into power save mode too early, before the chip has established a fix, the chip can perform a full reset.
 
-You can find the messages to change the navigation and power modes in the [GPX_and_CSV_Logger](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/tree/master/Arduino) Arduino code.
+By default, the SAM-M8Q will receive signals from GPS, SBAS, QZSS and GLONASS. If you want to enable Galileo reception, you'll need to do this with another UBX message (see below).
+
+You can find the messages to change the navigation mode, power mode and GNSS configuration in the [GPX_and_CSV_Logger](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/tree/master/Arduino) Arduino code.
 
 ## GPX_and_CSV_Logger
 
@@ -118,6 +120,10 @@ By default, the code updates the GPX and CSV files once every five seconds. You 
 Be careful when you disconnect the power as you may end up with a corrupt file if you remove the power while the SD card is being updated.
 You can wait for the Adalogger red LED to flash (indicating an SD write) then quickly disconnect the power once the LED has gone out.
 Or connect a normally-open push-to-make button between swPin (by default this is digital pin 15 - 0.2" away from the GND pin on the Adalogger) and GND. Pressing it will stop the logger writing to SD card, leaving it ready for the power to be removed.
+
+To enable Galileo reception, uncomment the line which says _#define GALILEO_
+
+To enable power saving mode, uncomment the line which says _#define LOWPOWER_
 
 GPX_and_CSV_Logger can also be used with the Adafruit Ultimate GPS FeatherWing. Comment out the line which says _#define UBLOX_ to use the Ultimate GPS.
 
