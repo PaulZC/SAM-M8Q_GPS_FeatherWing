@@ -81,7 +81,7 @@ TP is also connected to an LED via a buffer transistor. By default it will flash
 
 ## SAFEBOOT
 
-![SAM-M8Q_FeatherWing_SAFEBOOT](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_FeatherWing_SAFEBOOT.jpg)
+![SAM-M8Q_FeatherWing_SAFEBOOT](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_FeatherWing_SAFEBOOT.JPG)
 
 A small, square, unlabelled via now provides access to the SAFEBOOT pin. You will need access to this to update the M8 firmware.
 
