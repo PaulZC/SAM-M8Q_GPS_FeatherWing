@@ -79,6 +79,12 @@ TP is also connected to an LED via a buffer transistor. By default it will flash
 
 **En** is a true 'power disable' control line you can use to completely cut power to the SAM-M8Q. This is good if you need to run at ultra-low-power modes. By default this is pulled low (enabled). So pull high (to 3V) to disable the SAM-M8Q.
 
+## SAFEBOOT
+
+![SAM-M8Q_FeatherWing_SAFEBOOT](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/blob/master/img/SAM-M8Q_FeatherWing_SAFEBOOT.jpg)
+
+A small, square, unlabelled via now provides access to the SAFEBOOT pin. You will need access to this to update the M8 firmware.
+
 ## Battery Backup
 
 Like the Ultimate GPS FeatherWing, the SAM-M8Q FeatherWing includes a holder for a CR1220 back-up battery which will keep the SAM-M8Q's internal clock going if the power is removed or disabled, providing a much quicker "warm start" when the power is reconnected.
