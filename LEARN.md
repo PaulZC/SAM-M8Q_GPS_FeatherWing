@@ -131,6 +131,8 @@ To enable Galileo reception in addition to GPS, GLONASS and SBAS, uncomment the 
 
 To enable power saving mode, uncomment the line which says _#define LOWPOWER_
 
+The code now calculates the UBX checksum bytes for you, so it is much easier to make changes to the GNSS configuration. See sendUBX() in the code.
+
 GPX_and_CSV_Logger can also be used with the Adafruit Ultimate GPS FeatherWing. Comment out the line which says _#define UBLOX_ to use the Ultimate GPS.
 
 ## Datasheets
