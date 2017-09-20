@@ -105,7 +105,7 @@ Having the messages prefixed with $GN will confuse the Adafruit GPS Library and 
 
 The M8 chipset supports several different navigation modes including: portable, pedestrian, automotive, sea and "Airborne <1G" (which is really useful for high altitude ballooning!).
 
-In normal power mode, the SAM-M8Q draws approx. 29mA. You can reduce this to approx. 9.5mA by putting the M8 into power save mode. But be careful. If you put the M8 into power save mode too early, before the chip has established a fix, the chip can perform a full reset.
+In normal power mode, the SAM-M8Q draws approx. 29mA. You can reduce this to approx. 9.5mA by putting the M8 into power save mode. But be careful. If you put the M8 into power save mode too early, before the chip has established a fix, the chip can perform a full restart.
 
 By default, the SAM-M8Q will receive signals from GPS, SBAS, QZSS and GLONASS. If you want to enable Galileo reception, you'll need to do this with another UBX message (see below).
 
@@ -121,7 +121,7 @@ Be careful when you disconnect the power as you may end up with a corrupt file i
 You can wait for the Adalogger red LED to flash (indicating an SD write) then quickly disconnect the power once the LED has gone out.
 Or connect a normally-open push-to-make button between swPin (by default this is digital pin 15 - 0.2" away from the GND pin on the Adalogger) and GND. Pressing it will stop the logger writing to SD card, leaving it ready for the power to be removed.
 
-To enable Galileo reception, uncomment the line which says _#define GALILEO_
+To enable Galileo reception in addition to GPS, GLONASS and SBAS, uncomment the line which says _#define GALILEO_
 
 To enable power saving mode, uncomment the line which says _#define LOWPOWER_
 
