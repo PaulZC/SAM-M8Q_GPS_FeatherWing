@@ -9066,6 +9066,14 @@ if you will not be using the CR1220 battery.</text>
 <wire x1="226.06" y1="139.7" x2="231.14" y2="139.7" width="0.1524" layer="91"/>
 </segment>
 </net>
+<net name="SAFEBOOT" class="0">
+<segment>
+<pinref part="U1" gate="G$1" pin="SAFEBOOT_N"/>
+<wire x1="193.04" y1="93.98" x2="193.04" y2="91.44" width="0.1524" layer="91"/>
+<label x="200.66" y="91.44" size="1.778" layer="95"/>
+<wire x1="193.04" y1="91.44" x2="213.36" y2="91.44" width="0.1524" layer="91"/>
+</segment>
+</net>
 </nets>
 </sheet>
 </sheets>
