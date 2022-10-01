@@ -12,7 +12,9 @@ The [Eagle](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/tree/master/Eagle)
 
 The [Arduino](https://github.com/PaulZC/SAM-M8Q_GPS_FeatherWing/tree/master/Arduino) directory contains code for the [Adafruit Feather M0 Adalogger](https://www.adafruit.com/products/2796) which will log your route to SD card in GPX and CSV format
 
-Distributed under a Creative Commons Attribution, Share-Alike license
+## Licence
+
+Please see [LICENSE.md](./LICENSE.md) for details.
 
 Enjoy!
 

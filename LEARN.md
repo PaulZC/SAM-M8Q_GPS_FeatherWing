@@ -155,9 +155,11 @@ Useful documentation about the SAM-M8Q and its protocol specification can be fou
 The SAM-M8Q GNSS FeatherWing is based extensively on an original design by Adafruit Industries:
 - https://github.com/adafruit/Adafruit-Ultimate-GPS-FeatherWing-PCB
 
-Distributed under a Creative Commons Attribution, Share-Alike license
-
 Adafruit invests time and resources providing this open source design, please support Adafruit and open-source hardware by purchasing products from Adafruit!
+
+## Licence
+
+Please see [LICENSE.md](./LICENSE.md) for details.
 
 Enjoy!
 
